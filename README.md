@@ -1,6 +1,6 @@
 # smponline-utdb
 
-# How To Create New Code
+# How To Create New Symbol
 
 1. Symbol
    
