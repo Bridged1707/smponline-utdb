@@ -37,6 +37,26 @@ VALUES (
 );
 ```
 
+# How To Remove Prediction Market
+
+```
+BEGIN;
+
+-- 1. Remove all wagers associated with this market
+DELETE FROM prediction_wagers 
+WHERE market_code = 'IRON_MOVE_25';
+
+-- 2. Remove all price snapshots associated with this market
+DELETE FROM prediction_market_snapshots 
+WHERE market_code = 'IRON_MOVE_25';
+
+-- 3. Finally, remove the market itself
+DELETE FROM prediction_markets 
+WHERE code = 'IRON_MOVE_25';
+
+COMMIT;
+```
+
 # How To Create New Symbol
 
 1. Symbol
