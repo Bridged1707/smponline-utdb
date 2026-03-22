@@ -1,5 +1,42 @@
 # smponline-utdb
 
+# How To Create New Prediction Market
+
+```
+INSERT INTO prediction_markets (
+    code, 
+    title, 
+    description, 
+    closes_at, 
+    resolves_at, 
+    status, 
+    created_by, 
+    created_at, 
+    updated_at, 
+    yes_pool, 
+    no_pool, 
+    total_volume, 
+    price_yes, 
+    price_no
+)
+VALUES (
+    'MARKET_CODE_HERE', 
+    'Your Question Here?', 
+    'A brief description of the market rules.', 
+    NOW() + interval '7 days', 
+    NOW() + interval '8 days', 
+    'open', 
+    'YOUR_NAME', 
+    NOW(), 
+    NOW(), 
+    0, 
+    0, 
+    0, 
+    0.50, 
+    0.50 
+);
+```
+
 # How To Create New Symbol
 
 1. Symbol
