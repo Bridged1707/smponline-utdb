@@ -21,17 +21,17 @@ INSERT INTO shops (
 )
 VALUES (
     9999991,                                  -- unique shop_id
-    'DepositBot',                             -- owner_name
-    '11111111-1111-1111-1111-111111111111',    -- owner_uuid (MUST match allowlist)
+    'Suijin___',                             -- owner_name
+    '998dffa4-b706-41ed-bd89-fdc80667d235',    -- owner_uuid (MUST match allowlist)
     'world',                                  -- world
     1000,                                     -- x
     64,                                       -- y
     1000,                                     -- z
     'SELLING',                                -- shop_type
-    10,                                       -- price (diamonds)
-    9999,                                     -- remaining stock
-    'DIRT',                                   -- item_type
-    'Dirt',                                   -- item_name
+    1,                                       -- price (diamonds)
+    134,                                     -- remaining stock
+    'PAPER',                                   -- item_type
+    'Wall Street Deposit Slip',                                   -- item_name
     1,                                        -- item_quantity
     '{}',                                     -- snbt
     (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT -- last_seen (ms)
