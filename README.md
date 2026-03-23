@@ -1,5 +1,42 @@
 # smponline-utdb
 
+# How To Add A Deposit Shop
+
+INSERT INTO shops (
+    shop_id,
+    owner_name,
+    owner_uuid,
+    world,
+    x,
+    y,
+    z,
+    shop_type,
+    price,
+    remaining,
+    item_type,
+    item_name,
+    item_quantity,
+    snbt,
+    last_seen
+)
+VALUES (
+    9999991,                                  -- unique shop_id
+    'DepositBot',                             -- owner_name
+    '11111111-1111-1111-1111-111111111111',    -- owner_uuid (MUST match allowlist)
+    'world',                                  -- world
+    1000,                                     -- x
+    64,                                       -- y
+    1000,                                     -- z
+    'SELLING',                                -- shop_type
+    10,                                       -- price (diamonds)
+    9999,                                     -- remaining stock
+    'DIRT',                                   -- item_type
+    'Dirt',                                   -- item_name
+    1,                                        -- item_quantity
+    '{}',                                     -- snbt
+    (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT -- last_seen (ms)
+);
+
 # How To Create New Prediction Market
 
 ```
