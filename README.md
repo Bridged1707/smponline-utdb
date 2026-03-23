@@ -20,16 +20,16 @@ INSERT INTO shops (
     last_seen
 )
 VALUES (
-    9999991,                                  -- unique shop_id
+    36846,                                  -- unique shop_id
     'Suijin___',                             -- owner_name
     '998dffa4-b706-41ed-bd89-fdc80667d235',    -- owner_uuid (MUST match allowlist)
     'world',                                  -- world
-    1000,                                     -- x
-    64,                                       -- y
-    1000,                                     -- z
+    -480,                                     -- x
+    109,                                       -- y
+    -8614,                                     -- z
     'SELLING',                                -- shop_type
     1,                                       -- price (diamonds)
-    134,                                     -- remaining stock
+    162,                                     -- remaining stock
     'PAPER',                                   -- item_type
     'Wall Street Deposit Slip',                                   -- item_name
     1,                                        -- item_quantity
