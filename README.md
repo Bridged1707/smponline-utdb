@@ -1,7 +1,7 @@
 # smponline-utdb
 
 # How To Add A Deposit Shop
-
+```
 INSERT INTO shops (
     shop_id,
     owner_name,
@@ -36,6 +36,7 @@ VALUES (
     '{}',                                     -- snbt
     (EXTRACT(EPOCH FROM NOW()) * 1000)::BIGINT -- last_seen (ms)
 );
+```
 
 # How To Create New Prediction Market
 
