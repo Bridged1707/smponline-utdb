@@ -1,5 +1,43 @@
 # smponline-utdb
 
+# Check Total Membership Sales
+Simple Total Spent
+```
+SELECT COALESCE(SUM(amount), 0) AS total_membership_diamonds_spent
+FROM balance_transactions
+WHERE kind = 'membership_purchase';
+```
+Per User Total Spent
+```
+SELECT
+    discord_uuid,
+    COALESCE(SUM(amount), 0) AS total_membership_diamonds_spent
+FROM balance_transactions
+WHERE kind = 'membership_purchase'
+GROUP BY discord_uuid
+ORDER BY total_membership_diamonds_spent DESC;
+```
+Per Tier Totals
+```
+SELECT
+    metadata->>'tier' AS tier,
+    COALESCE(SUM(amount), 0) AS diamonds_spent
+FROM balance_transactions
+WHERE kind = 'membership_purchase'
+GROUP BY metadata->>'tier'
+ORDER BY diamonds_spent DESC;
+```
+Weekly Sales
+```
+SELECT
+    DATE_TRUNC('week', created_at) AS week_start,
+    COALESCE(SUM(amount), 0) AS diamonds_spent
+FROM balance_transactions
+WHERE kind = 'membership_purchase'
+GROUP BY DATE_TRUNC('week', created_at)
+ORDER BY week_start DESC;
+```
+
 # How To Add A Deposit Shop
 ```
 INSERT INTO shops (
