@@ -1,5 +1,32 @@
 # smponline-utdb
 
+# Check User Credit Table
+```
+SELECT 
+    a.discord_uuid, 
+    a.mc_name, 
+    COALESCE(w.weekly_credits, 0) AS total_weekly_credits, 
+    COALESCE(w.used_credits, 0) AS credits_used, 
+    (COALESCE(w.weekly_credits, 0) - COALESCE(w.used_credits, 0)) AS credits_remaining,
+    w.week_end_at AS reset_at
+FROM accounts a
+LEFT JOIN user_credit_wallets w ON a.discord_uuid = w.discord_uuid
+ORDER BY credits_used DESC;
+```
+Filter by specific user.
+```
+SELECT 
+    a.discord_uuid, 
+    a.mc_name, 
+    COALESCE(w.weekly_credits, 0) AS total_weekly_credits, 
+    COALESCE(w.used_credits, 0) AS credits_used, 
+    (COALESCE(w.weekly_credits, 0) - COALESCE(w.used_credits, 0)) AS credits_remaining,
+    w.week_end_at AS reset_at
+FROM accounts a
+LEFT JOIN user_credit_wallets w ON a.discord_uuid = w.discord_uuid
+WHERE a.discord_uuid = 'TARGET_DISCORD_UUID';
+```
+
 # Check Total Membership Sales
 Simple Total Spent
 ```
