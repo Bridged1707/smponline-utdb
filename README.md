@@ -104,40 +104,81 @@ VALUES (
 ```
 
 # How To Create New Prediction Market
-
+Category Market
 ```
+BEGIN;
+
+-- Step 1: Create the Market Metadata
 INSERT INTO prediction_markets (
-    code,
-    title,
-    description,
-    closes_at,
-    resolves_at,
-    status,
-    created_by,
-    created_at,
-    updated_at,
-    yes_pool,
-    no_pool,
-    total_volume,
-    price_yes,
-    price_no
+    code, 
+    title, 
+    description, 
+    market_type, 
+    resolution_mode, 
+    is_active, 
+    ends_at
 )
 VALUES (
-    'CF1',
-    'Will it be heads?',
-    '.',
-    NOW() + interval '9 minutes',
-    NOW() + interval '15 minutes',
-    'open',
-    'Suijin___',
-    NOW(),
-    NOW(),
-    0,
-    0,
-    0,
-    0.50,
-    0.50
+    'MVP_2026', 
+    'Who will be the Server MVP for March?', 
+    'Market resolves based on community vote at the end of the month.', 
+    'categorical', 
+    'admin_set_option', 
+    true, 
+    '2026-03-31 23:59:59'
 );
+
+-- Step 2: Add the Options (The "Categories")
+-- We capture the generated IDs to initialize the state in the next step
+WITH inserted_options AS (
+    INSERT INTO prediction_market_options (market_code, option_code, label, sort_order)
+    VALUES 
+        ('MVP_2026', 'PLAYER_A', 'Suijin___', 10),
+        ('MVP_2026', 'PLAYER_B', 'codeHusky', 20),
+        ('MVP_2026', 'PLAYER_C', 'ItsAsaii', 30),
+        ('MVP_2026', 'OTHER', 'Someone Else', 40)
+    RETURNING id, market_code
+)
+-- Step 3: Initialize the State for every option
+INSERT INTO prediction_option_state (market_code, option_id, pool_amount, implied_price)
+SELECT market_code, id, 0, 0.25 -- Starting at 0.25 implied price for 4 options
+FROM inserted_options;
+
+COMMIT;
+```
+Numeric Range Market
+```
+BEGIN;
+
+INSERT INTO prediction_markets (code, title, market_type, resolution_mode)
+VALUES ('NSTR_PRICE_EOM', 'Nether Star Price at End of Month', 'numeric_range', 'admin_set_numeric');
+
+WITH inserted_options AS (
+    INSERT INTO prediction_market_options (market_code, option_code, label, range_min, range_max, sort_order)
+    VALUES 
+        ('NSTR_PRICE_EOM', 'LOW', 'Under 500', 0, 499.99, 10),
+        ('NSTR_PRICE_EOM', 'MID', '500 to 1000', 500, 1000, 20),
+        ('NSTR_PRICE_EOM', 'HIGH', 'Over 1000', 1000.01, 999999, 30)
+    RETURNING id, market_code
+)
+INSERT INTO prediction_option_state (market_code, option_id)
+SELECT market_code, id FROM inserted_options;
+
+COMMIT;
+```
+Query Live Odds
+```
+SELECT 
+    pm.title,
+    pmo.label AS option_name,
+    pos.implied_price,
+    pos.pool_amount,
+    pos.wager_count
+FROM prediction_markets pm
+JOIN prediction_market_options pmo ON pm.code = pmo.market_code
+JOIN prediction_option_state pos ON pmo.id = pos.option_id
+WHERE pm.code = 'MVP_2026' -- Replace with your market code
+ORDER BY pmo.sort_order ASC;
 ```
 
 # How To Remove Prediction Market
