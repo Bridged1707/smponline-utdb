@@ -119,13 +119,13 @@ INSERT INTO prediction_markets (
     closes_at      -- Changed from ends_at
 )
 VALUES (
-    'MVP_2026', 
+    'TEST001', 
     'Who will be the Server MVP for March?', 
     'Market resolves based on community vote at the end of the month.', 
     'categorical', 
     'admin_set_option', 
     'open',        -- Standard status for active markets
-    '2026-03-31 23:59:59'
+    '2026-03-30 19:30:59'
 );
 
 -- Step 2: Add the Options (The "Categories")
