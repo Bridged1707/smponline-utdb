@@ -115,8 +115,8 @@ INSERT INTO prediction_markets (
     description, 
     market_type, 
     resolution_mode, 
-    is_active, 
-    ends_at
+    status,        -- Changed from is_active
+    closes_at      -- Changed from ends_at
 )
 VALUES (
     'MVP_2026', 
@@ -124,24 +124,23 @@ VALUES (
     'Market resolves based on community vote at the end of the month.', 
     'categorical', 
     'admin_set_option', 
-    true, 
+    'open',        -- Standard status for active markets
     '2026-03-31 23:59:59'
 );
 
 -- Step 2: Add the Options (The "Categories")
--- We capture the generated IDs to initialize the state in the next step
 WITH inserted_options AS (
     INSERT INTO prediction_market_options (market_code, option_code, label, sort_order)
     VALUES 
         ('MVP_2026', 'PLAYER_A', 'Suijin___', 10),
-        ('MVP_2026', 'PLAYER_B', 'codeHusky', 20),
-        ('MVP_2026', 'PLAYER_C', 'ItsAsaii', 30),
+        ('MVP_2026', 'PLAYER_B', 'ChadsGaming', 20),
+        ('MVP_2026', 'PLAYER_C', 'BreezyMedic', 30),
         ('MVP_2026', 'OTHER', 'Someone Else', 40)
     RETURNING id, market_code
 )
 -- Step 3: Initialize the State for every option
 INSERT INTO prediction_option_state (market_code, option_id, pool_amount, implied_price)
-SELECT market_code, id, 0, 0.25 -- Starting at 0.25 implied price for 4 options
+SELECT market_code, id, 0, 0.25 
 FROM inserted_options;
 
 COMMIT;
