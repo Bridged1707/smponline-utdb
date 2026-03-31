@@ -119,13 +119,13 @@ INSERT INTO prediction_markets (
     closes_at
 )
 VALUES (
-    'TEST001', 
-    'Who will be the Server MVP for March?', 
+    'TEST002', 
+    'Choose a player', 
     'Market resolves based on community vote at the end of the month.', 
     'categorical', 
     'admin_set_option', 
     'open', 
-    '2026-03-31 23:59:59'
+    '2026-03-30 23:11:59'
 ) ON CONFLICT (code) DO NOTHING;
 
 -- Step 2: Add the Options (linked to 'MVP_MARCH_2026')
