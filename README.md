@@ -119,23 +119,21 @@ INSERT INTO prediction_markets (
     closes_at
 )
 VALUES (
-    'TEST009', 
+    'COINFLIP2', 
     'Choose a player', 
     'Market resolves based on community vote at the end of the month.', 
     'categorical', 
     'admin_set_option', 
     'open', 
-    '2026-03-31 00:33:59'
+    '2026-03-31 05:42:00'
 ) ON CONFLICT (code) DO NOTHING;
 
 -- Step 2: Add the Options (linked to 'MVP_MARCH_2026')
 WITH inserted_options AS (
     INSERT INTO prediction_market_options (market_code, option_code, label, sort_order)
     VALUES 
-        ('TEST009', 'PLAYER_A', 'Suijin___', 10),
-        ('TEST009', 'PLAYER_B', 'ChadsGaming', 20),
-        ('TEST009', 'PLAYER_C', 'BreezyMedic', 30),
-        ('TEST009', 'OTHER', 'Someone Else', 40)
+        ('COINFLIP2', 'HEADS', 'Heads', 10),
+        ('COINFLIP2', 'TAILS', 'Tails', 20)
     ON CONFLICT (market_code, option_code) DO NOTHING
     RETURNING id, market_code
 )
